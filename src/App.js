@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+
 import {
   Container,
   Grid,
@@ -15,7 +17,7 @@ import {
   TextField,
 } from "@material-ui/core";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 function App() {
   // File management
@@ -97,13 +99,14 @@ function App() {
 
   // --------------- Renderers ----------------------------
   // The segments of the page were divided into sections and functions only for ease of understanding.
+  // No component was created as each individual segment of this app was not being reused. Nevertheless, this app could be turned into a self contained component for use in a bigger project.
 
   // Renders the pdf viewing segment
   function renderPdfViewer() {
     return (
       <Grid container direction="column" justify="center" alignItems="center">
         <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-          <Page key={`page_${pageNumber}`} pageNumber={pageNumber} margin="0" />
+          <Page pageNumber={pageNumber} />
         </Document>
       </Grid>
     );
